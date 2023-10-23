@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Redirigir las solicitudes sin .php a su equivalente con .php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L]
+
+# Configurar index.php como la página predeterminada
+DirectoryIndex index.php
