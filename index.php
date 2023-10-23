@@ -1,50 +1,52 @@
-<?php
-require_once('class/modelo.php');
+<?php 
+
+require_once('class/navbar.php');
+
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de Tareas</title>
-</head>
-<body>
-    
     <h1>Lista de Tareas</h1>
 </nav>
 
     <table>
         <tr>
             <th>Nombre</th>
+            <th>Descripcion</th>
             <th>Fecha</th>
+            <th>Editada</th>
             <th>Responsable</th>
+            <th>Clasificacion</th>
             <th>Estado</th>
             <th></th>
         </tr>
-        <?php 
-        $tareas = obtener_tareas();
-        foreach ($tareas as $tarea) {
-            echo "<tr>";
-            echo "<td>{$tarea['nombre']}</td>";
-            echo "<td>{$tarea['fecha']}</td>";
-            echo "<td>{$tarea['responsable']}</td>";
-            echo "<td>";
-            echo "<label class='switch'>";
-            echo "<input type='checkbox' onchange='actualizarEstado({$tarea['id']}, this.checked)'". ($tarea['estado'] == 'completa' ? ' checked' : '') . ">";
-            echo "<span class='slider'></span>";
-            echo "</label>";
-            echo "</td>";
-            echo "<td>";
-            echo "<input type='radio' name='tarea_id' value='{$tarea['id']}'>";
-            echo "</td>";
-            echo "</tr>";
-        }
-        
+
+        <?php
+       $obj_funciones=new funciones();
+       $tareas=$obj_funciones->obtener_tareas();
+       
+       foreach ($tareas as $tarea) {
+        echo "<tr>";
+        echo "<td>{$tarea['titulo']}</td>";
+        echo "<td>{$tarea['descripcion']}</td>";
+        echo "<td>{$tarea['fecha_compromiso']}</td>";
+        echo "<td>{$tarea['editada']}</td>";
+        echo "<td>{$tarea['responsable']}</td>";
+        echo "<td>{$tarea['tipo_tarea']}</td>";
+        echo "<td>";
+        echo "<button onclick='actualizarEstado({$tarea['id']}, \"pendiente\")' " . ($tarea['estado'] == 'pendiente' ? 'class="active"' : '') . ">Pendiente</button>";
+        echo "<button onclick='actualizarEstado({$tarea['id']}, \"en_proceso\")' " . ($tarea['estado'] == 'en_proceso' ? 'class="active"' : '') . ">En Proceso</button>";
+        echo "<button onclick='actualizarEstado({$tarea['id']}, \"completa\")' " . ($tarea['estado'] == 'completa' ? 'class="active"' : '') . ">Completa</button>";
+        echo "<td>";
+        echo "<input type='radio' name='tarea_id' value='{$tarea['id']}'>";
+        echo "</td>";
+        echo "</tr>";
+    }
+    
         ?>
     </table>
-    <form action="" method="post">
-    <input type="submit" name="eliminar" value="Eliminar Tarea Seleccionada">
 </form>
-    <script src="js/script.js"></script>
+<form action="" method="post">
+    <input type="submit" name="eliminar" value="Eliminar Tarea Seleccionada">
+    <input type="submit" name="Editar" value="Editar Tarea Seleccionada">
+    </form>
+
 </body>
 </html>
-
