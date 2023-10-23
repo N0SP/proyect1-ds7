@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Agregar Tarea</title>
-    <link rel="stylesheet" href="../css/styles.css">
-</head>
-<body>
+<?php 
+
+require_once('class/navbar.php');
+
+?>
     <h1>Agregar Tarea</h1>
-    <?php require_once('../class/navbar.php'); ?>
     <form action="" method="post">
         <input type="text" name="titulo" placeholder="Título" required>
         <textarea name="descripcion" placeholder="Descripción"></textarea>
@@ -22,7 +18,6 @@
     </form>
 
     <?php
-    require_once('../class/functions.php');
     $obj_funciones=new funciones();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $titulo = $_POST['titulo'];

@@ -1,15 +1,10 @@
+<?php 
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Todas las Tareas</title>
-    <link rel="stylesheet" href="../css/styles.css">
-</head>
-<body>
-    
+require_once('class/navbar.php');
+
+?>
     <h1>Todas las Tareas</h1>
-    <?php require_once('../class/navbar.php'); ?>
+
     <table>
         <tr>
         <th>Nombre</th>
@@ -20,7 +15,7 @@
             <th>Clasificacion</th>
             <th>Estado</th>
         </tr>
-        <?php require_once ('../class/functions.php');
+        <?php 
         $obj_funciones=new funciones();
         $tareas=$obj_funciones->obtener_tareas();
         foreach ($tareas as $tarea) {
