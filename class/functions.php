@@ -65,6 +65,21 @@ class funciones extends modeloCredencialesBD{
         }
     }
     
+    public function buscar_tareas($termino) {
+        $termino = $this->_db->real_escape_string($termino);
+        $query = "CALL sp_buscar_tareas('$termino')";
+    
+        $resultado = $this->_db->query($query);
+    
+        if (!$resultado) {
+            return false;
+        }
+    
+        $tareas = $resultado->fetch_all(MYSQLI_ASSOC);
+        $resultado->close();
+    
+        return $tareas;
+    }
     
     
 
