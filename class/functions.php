@@ -26,50 +26,10 @@ class funciones extends modeloCredencialesBD{
             return false; 
         }
     }
-
-    public function borrar_tarea($id) {
-     $query = "CALL sp_eliminar_tarea('$id')";
-        $consulta = $this->_db->query($query);
-        
-            if ($consulta) {
-                return true; 
-            } else {
-                return false; 
-            }   
+    
+   /* public function actualizar_estado($id, $estado) {
     }
 
-    public function obtenerClaseEstado($estado) {
-        switch ($estado) {
-            case 'pendiente':
-                return 'btn-warning';
-            case 'completa':
-                return 'btn-success';
-            case 'en_proceso':
-                return 'btn-danger';
-            default:
-                return '';
-        }
-    }
-    
-    public function actualizar_estado($id, $estado) {
-        $stmt = $this->_db->prepare("CALL sp_actualizar_estado(?, ?)");
-        $stmt->bind_param("is", $id, $estado);
-    
-        try {
-            $stmt->execute();
-            $stmt->close();
-            return true;
-        } catch (Exception $e) {
-            error_log("Error SQL: " . $e->getMessage());
-            return false;
-        }
-    }
-    
-    
-    
-
-
-/*
     public function editado($id, $editado) {
     }
 
