@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-10-2023 a las 05:08:23
+-- Tiempo de generación: 25-10-2023 a las 16:54:09
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -34,6 +34,17 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_agregar_tarea` (IN `p_titulo` VA
     VALUES (p_titulo, p_descripcion, p_fecha_compromiso, p_editada, p_responsable, p_tipo_tarea, p_estado);
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_buscar_tareas` (IN `termino` VARCHAR(255))   BEGIN
+    SELECT * FROM tareas 
+    WHERE titulo LIKE CONCAT('%', termino, '%') 
+    OR descripcion LIKE CONCAT('%', termino, '%') 
+    OR fecha_compromiso LIKE CONCAT('%', termino, '%') 
+    OR editada LIKE CONCAT('%', termino, '%') 
+    OR responsable LIKE CONCAT('%', termino, '%') 
+    OR tipo_tarea LIKE CONCAT('%', termino, '%') 
+    OR estado LIKE CONCAT('%', termino, '%');
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_eliminar_tarea` (IN `tarea_id` INT)   BEGIN
     DELETE FROM tareas WHERE id = tarea_id;
 END$$
@@ -62,17 +73,6 @@ CREATE TABLE `tareas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `tareas`
---
-
-INSERT INTO `tareas` (`id`, `titulo`, `descripcion`, `fecha_compromiso`, `editada`, `responsable`, `tipo_tarea`, `estado`) VALUES
-(10, 'd', 's', '2023-10-04', 'no', 'd', 'hogar', 'completa'),
-(11, 's', 's', '2023-10-04', 'no', 'asa', 'hogar', 'completa'),
-(12, 'hola', 'pepe', '2023-10-11', 'no', 'l', 'hogar', 'completa'),
-(13, 's', 'd', '2023-10-19', 'no', 's', 'hogar', 'completa'),
-(14, 'hola', 'd', '2023-10-17', 'no', 'hola', 'hogar', 'completa');
-
---
 -- Índices para tablas volcadas
 --
 
@@ -90,7 +90,7 @@ ALTER TABLE `tareas`
 -- AUTO_INCREMENT de la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
