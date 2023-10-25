@@ -46,14 +46,62 @@ require_once('class/navbar.php');
             echo "</td>";
             echo "<td>";
             echo "<button class='btn btn-danger btn-sm' data-id='{$tarea['id']}' onclick='eliminarTarea(this)'>Eliminar</button>";
-            echo "<button class='btn btn-primary btn-sm' onclick=\"editarTarea({$tarea['id']})\">Editar</button>";
+            echo "<button class='btn btn-primary btn-sm' data-toggle='modal' data-target='#modalEditar{$tarea['id']}'>Editar</button>";
             echo "</td>";
             echo "</tr>";
         }
-        
         ?>
     </tbody>
 </table>
-</div>
+
+<?php foreach ($tareas as $tarea) : ?>
+    <div class="modal fade" id="modalEditar<?php echo $tarea['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditarLabel">Editar Tarea</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post">
+                    <input type="hidden" name="tarea_id" value="<?php echo $tarea['id']; ?>">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="titulo" placeholder="Título" value="<?php echo $tarea['titulo']; ?>" required> <br>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="descripcion" placeholder="Descripción" required><?php echo $tarea['descripcion']; ?></textarea> <br>
+                        </div>
+                        <div class="form-group">
+                            <input type="date" class="form-control" name="fecha_compromiso" value="<?php echo $tarea['fecha_compromiso']; ?>" required> <br>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="responsable" placeholder="Responsable" value="<?php echo $tarea['responsable']; ?>" required> <br>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="tipo_tarea">
+                                <option value="hogar" <?php if($tarea['tipo_tarea'] == 'hogar') echo 'selected'; ?>>Hogar</option>
+                                <option value="trabajo" <?php if($tarea['tipo_tarea'] == 'trabajo') echo 'selected'; ?>>Trabajo</option>
+                                <option value="escuela" <?php if($tarea['tipo_tarea'] == 'escuela') echo 'selected'; ?>>Escuela</option>
+                            </select>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>

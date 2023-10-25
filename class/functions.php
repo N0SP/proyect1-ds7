@@ -81,24 +81,19 @@ class funciones extends modeloCredencialesBD{
         return $tareas;
     }
     
-    
-
-
-/*
-    public function editado($id, $editado) {
-    }
-
-     public function eliminar_tarea($id) {
-        $query = "CALL sp_eliminar_tarea('$id')";
+    public function editar_tarea($id,$titulo, $descripcion, $fecha_compromiso,$editada,$responsable, $tipo_tarea, $estado) {
+        $query = "UPDATE tareas SET titulo='$titulo', descripcion='$descripcion', fecha_compromiso='$fecha_compromiso', editada='$editada', responsable='$responsable', tipo_tarea='$tipo_tarea',estado='$estado' WHERE id=$id";
+        
         $consulta = $this->_db->query($query);
     
         if ($consulta) {
-            return true; 
+            return true;
         } else {
-            return false; 
+            return false;
         }
     }
-    */
+    
+
 
 }
 
