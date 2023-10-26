@@ -82,12 +82,13 @@ class funciones extends modeloCredencialesBD{
     }
     
     public function editar_tarea($id, $titulo, $descripcion, $fecha_compromiso, $editada, $responsable, $tipo_tarea, $estado) {
-        $query = "CALL sp_editar(?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "UPDATE tareas SET titulo=?, descripcion=?, fecha_compromiso=?, editada=?, responsable=?, tipo_tarea=?, estado=? WHERE id=?";
         
         $stmt = $this->_db->prepare($query);
     
         if ($stmt) {
-            $stmt->bind_param('isssssss', $id, $titulo, $descripcion, $fecha_compromiso, $editada, $responsable, $tipo_tarea, $estado);
+            $stmt->bind_param('sssssssi', $titulo, $descripcion, $fecha_compromiso, $editada, $responsable, $tipo_tarea, $estado, $id);
+    
             if ($stmt->execute()) {
                 $stmt->close();
                 return true;
@@ -100,5 +101,6 @@ class funciones extends modeloCredencialesBD{
     }
 
 }
+
 
 ?>
