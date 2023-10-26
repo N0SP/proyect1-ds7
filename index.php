@@ -65,7 +65,7 @@ require_once('class/navbar.php');
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post">
+                    <form action="../proyect1-ds7/crud/procesar_edicion.php" method="post">
                     <input type="hidden" name="tarea_id" value="<?php echo $tarea['id']; ?>">
                         <div class="form-group">
                             <input type="text" class="form-control" name="titulo" placeholder="Título" value="<?php echo $tarea['titulo']; ?>" required> <br>
@@ -85,6 +85,9 @@ require_once('class/navbar.php');
                                 <option value="trabajo" <?php if($tarea['tipo_tarea'] == 'trabajo') echo 'selected'; ?>>Trabajo</option>
                                 <option value="escuela" <?php if($tarea['tipo_tarea'] == 'escuela') echo 'selected'; ?>>Escuela</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" name="estado_id" placeholder="Estado" value="<?php echo $tarea['estado']; ?>" required> <br>
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>

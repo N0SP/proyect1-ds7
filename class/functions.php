@@ -81,19 +81,23 @@ class funciones extends modeloCredencialesBD{
         return $tareas;
     }
     
-    public function editar_tarea($id,$titulo, $descripcion, $fecha_compromiso,$editada,$responsable, $tipo_tarea, $estado) {
-        $query = "UPDATE tareas SET titulo='$titulo', descripcion='$descripcion', fecha_compromiso='$fecha_compromiso', editada='$editada', responsable='$responsable', tipo_tarea='$tipo_tarea',estado='$estado' WHERE id=$id";
+    public function editar_tarea($id, $titulo, $descripcion, $fecha_compromiso, $editada, $responsable, $tipo_tarea, $estado) {
+        $query = "CALL sp_editar(?, ?, ?, ?, ?, ?, ?, ?)";
         
-        $consulta = $this->_db->query($query);
+        $stmt = $this->_db->prepare($query);
     
-        if ($consulta) {
-            return true;
+        if ($stmt) {
+            $stmt->bind_param('isssssss', $id, $titulo, $descripcion, $fecha_compromiso, $editada, $responsable, $tipo_tarea, $estado);
+            if ($stmt->execute()) {
+                $stmt->close();
+                return true;
+            } else {
+                return "Error al ejecutar la consulta: " . $stmt->error;
+            }
         } else {
-            return false;
+            return "Error en la preparación de la consulta: " . $this->_db->error;
         }
     }
-    
-
 
 }
 
