@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $resultado = $obj_funciones->editar_tarea($tarea_id, $titulo, $descripcion, $fecha_compromiso, 'si', $responsable, $tipo_tarea,$estado_id);
 
     if ($resultado) {
-        header("Location: ../index.php");  // Redirecciona a tu página principal
+        header("Location: ../index.php");  
         exit();
 
     } else {
