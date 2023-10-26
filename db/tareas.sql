@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-10-2023 a las 16:54:09
+-- Tiempo de generación: 26-10-2023 a las 03:08:15
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -25,10 +25,6 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_actualizar_estado` (IN `tarea_id` INT, IN `nuevo_estado` VARCHAR(255))   BEGIN
-    UPDATE tareas SET estado = nuevo_estado WHERE id = tarea_id;
-END$$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_agregar_tarea` (IN `p_titulo` VARCHAR(255), IN `p_descripcion` TEXT, IN `p_fecha_compromiso` DATE, IN `p_editada` VARCHAR(3), IN `p_responsable` VARCHAR(255), IN `p_tipo_tarea` VARCHAR(255), IN `p_estado` VARCHAR(255))   BEGIN
     INSERT INTO tareas (titulo, descripcion, fecha_compromiso, editada, responsable, tipo_tarea, estado)
     VALUES (p_titulo, p_descripcion, p_fecha_compromiso, p_editada, p_responsable, p_tipo_tarea, p_estado);
@@ -43,6 +39,19 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_buscar_tareas` (IN `termino` VAR
     OR responsable LIKE CONCAT('%', termino, '%') 
     OR tipo_tarea LIKE CONCAT('%', termino, '%') 
     OR estado LIKE CONCAT('%', termino, '%');
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_editar` (IN `p_id` INT, IN `p_titulo` VARCHAR(255), IN `p_descripcion` TEXT, IN `p_fecha_compromiso` DATE, IN `p_editada` DATETIME, IN `p_responsable` VARCHAR(255), IN `p_tipo_tarea` VARCHAR(255), IN `p_estado` VARCHAR(255))   BEGIN
+    UPDATE tareas 
+    SET 
+        titulo = p_titulo,
+        descripcion = p_descripcion,
+        fecha_compromiso = p_fecha_compromiso,
+        editada = p_editada,
+        responsable = p_responsable,
+        tipo_tarea = p_tipo_tarea,
+        estado = p_estado
+    WHERE id = p_id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_eliminar_tarea` (IN `tarea_id` INT)   BEGIN
@@ -90,7 +99,7 @@ ALTER TABLE `tareas`
 -- AUTO_INCREMENT de la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
