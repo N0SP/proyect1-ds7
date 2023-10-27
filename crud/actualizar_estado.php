@@ -3,7 +3,7 @@ require_once('../class/functions.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        $obj_funciones = new funciones(); // Crea una instancia de la clase funciones
+        $obj_funciones = new funciones(); 
 
         $id = $_POST['id'];
         $nuevoEstado = $_POST['estado'];

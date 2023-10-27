@@ -65,26 +65,42 @@ class funciones extends modeloCredencialesBD{
         }
     }
     
+    public function buscar_tareas($termino) {
+        $termino = $this->_db->real_escape_string($termino);
+        $query = "CALL sp_buscar_tareas('$termino')";
     
+        $resultado = $this->_db->query($query);
     
-
-
-/*
-    public function editado($id, $editado) {
+        if (!$resultado) {
+            return false;
+        }
+    
+        $tareas = $resultado->fetch_all(MYSQLI_ASSOC);
+        $resultado->close();
+    
+        return $tareas;
     }
-
-     public function eliminar_tarea($id) {
-        $query = "CALL sp_eliminar_tarea('$id')";
-        $consulta = $this->_db->query($query);
     
-        if ($consulta) {
-            return true; 
+    public function editar_tarea($id, $titulo, $descripcion, $fecha_compromiso, $editada, $responsable, $tipo_tarea, $estado) {
+        $query = "UPDATE tareas SET titulo=?, descripcion=?, fecha_compromiso=?, editada=?, responsable=?, tipo_tarea=?, estado=? WHERE id=?";
+        
+        $stmt = $this->_db->prepare($query);
+    
+        if ($stmt) {
+            $stmt->bind_param('sssssssi', $titulo, $descripcion, $fecha_compromiso, $editada, $responsable, $tipo_tarea, $estado, $id);
+    
+            if ($stmt->execute()) {
+                $stmt->close();
+                return true;
+            } else {
+                return "Error al ejecutar la consulta: " . $stmt->error;
+            }
         } else {
-            return false; 
+            return "Error en la preparación de la consulta: " . $this->_db->error;
         }
     }
-    */
 
 }
+
 
 ?>
